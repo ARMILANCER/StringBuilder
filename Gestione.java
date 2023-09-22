@@ -4,17 +4,19 @@ import java.io.RandomAccessFile;
 import java.io.IOException;
 
 public class Gestione {
-	private byte[] buffer;
+		private byte[] buffer;
 	public void insertData(String data) {
 		try (RandomAccessFile raf = new RandomAccessFile("dati.dat","rw")){
-			buffer = data.getBytes("UTF-8");
-			raf.write(buffer);
+			//buffer = data.getBytes("UTF-8");
+			//raf.write(buffer);
+			raf.writeBytes(data); 
+			raf.writeByte('\n');
 		}catch(IOException e){
 			e.printStackTrace();
 		}	
 	}
 	public void extractData() throws IOException{
-		RandomAccessFile raf = new RandomAccessFile("dati.dat","rw");
+		RandomAccessFile raf = new RandomAccessFile("dati.dat","r");
 		buffer = new byte[(int)raf.length()];
 		raf.read(buffer);
 		String text = new String(buffer, "UTF-8");
@@ -27,6 +29,11 @@ public class Gestione {
 		user.addName("Mark");
 		user.addName("Coriolis");
 		user.addYOB("2013");
+		
+		user.addName("Mark");
+		user.addName("Coriolis");
+		user.addYOB("2013");
+		
 		gestione.insertData(user.getInfo());
 		try {
 			gestione.extractData();
